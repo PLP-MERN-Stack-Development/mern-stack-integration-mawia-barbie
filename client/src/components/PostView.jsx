@@ -35,10 +35,10 @@ export default function PostView() {
 
       <div style={{ marginTop: "20px" }}>
         <Link to={`/edit/${post._id}`}>
-          <button>Edit</button>
+          <button className="btn">Edit</button>
         </Link>
         <Link to="/" style={{ marginLeft: "10px" }}>
-          <button>Back to Posts</button>
+          <button className="btn">Back to Posts</button>
         </Link>
       </div>
     </div>

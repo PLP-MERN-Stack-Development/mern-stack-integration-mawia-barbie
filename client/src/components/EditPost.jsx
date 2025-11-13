@@ -31,23 +31,30 @@ function EditPost() {
   };
 
   return (
-    <div style={{ maxWidth: "600px", margin: "50px auto" }}>
-      <h2>Edit Post</h2>
+    // Applied Tailwind classes for card-like styling
+    <div className="max-w-md mx-auto mt-10 p-6 bg-white border border-purple-200 rounded-xl shadow-md">
+      <h2 className="text-2xl font-bold mb-4">Edit Post</h2>
       <form
         onSubmit={handleSubmit}
-        style={{ display: "flex", flexDirection: "column", gap: "10px" }}
+        className="flex flex-col gap-4" // Tailwind for flex column and gap
       >
         <input
+          type="text" // Added type for semantic correctness
           value={post.title}
           onChange={(e) => setPost({ ...post, title: e.target.value })}
           required
+          className="border border-gray-300 p-2 rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-400" // Tailwind for input styling
         />
         <textarea
           value={post.content}
           onChange={(e) => setPost({ ...post, content: e.target.value })}
           required
+          rows="6" // Added rows for better textarea appearance
+          className="border border-gray-300 p-2 rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-400" // Tailwind for textarea styling
         />
-        <button type="submit">Update</button>
+        <button type="submit" className="btn">
+          Update Post
+        </button>
       </form>
     </div>
   );

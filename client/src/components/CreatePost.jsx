@@ -38,7 +38,7 @@ function CreatePost() {
           placeholder="Content"
           required
         />
-        <button type="submit">Publish</button>
+        <button type="submit" className="btn">Publish</button>
       </form>
     </div>
   );

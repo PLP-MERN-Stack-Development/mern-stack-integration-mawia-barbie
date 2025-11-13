@@ -1,52 +1,45 @@
-// src/components/PostList.jsx
 import { useEffect, useState } from "react";
-import { Link } from "react-router-dom"; // ✅ needed for navigation
 import { postService } from "../services/api.js";
+import { Link } from "react-router-dom";
 
 function PostList() {
   const [posts, setPosts] = useState([]);
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState("");
 
   useEffect(() => {
-    const getPosts = async () => {
+    const fetchPosts = async () => {
       try {
-        const data = await postService.getAllPosts();
-        console.log("Fetched posts:", data);
+        const data = await postService.getAllPosts(); // fixed function name
         setPosts(data);
       } catch (err) {
-        console.error(err);
-        setError("Failed to fetch posts");
-      } finally {
-        setLoading(false);
+        console.error("Failed to load posts:", err);
       }
     };
-    getPosts();
+    fetchPosts();
   }, []);
 
-  if (loading) return <p>Loading posts...</p>;
-  if (error) return <p style={{ color: "red" }}>{error}</p>;
-
   return (
-    <div>
-      <h2>All Posts</h2>
-      {posts.length === 0 ? (
-        <p>No posts yet 😅</p>
-      ) : (
-        <ul>
-          {posts.map((post) => (
-            <li key={post._id} style={{ marginBottom: "20px" }}>
-              <h3>{post.title}</h3>
-              <p>{post.content}</p>
-              <div style={{ display: "flex", gap: "10px" }}>
-                {/* View single post */}
-                <Link to={`/posts/${post._id}`}>
-                  <button>View</button>
-                </Link>
+    <div className="max-w-3xl mx-auto mt-10 px-4">
+      <h2 className="text-3xl font-bold text-purple-700 mb-6 text-center">
+        All Posts
+      </h2>
 
-                {/* Edit post */}
+      {posts.length === 0 ? (
+        <p className="text-center text-gray-500">No posts available.</p>
+      ) : (
+        <ul className="space-y-6">
+          {posts.map((post) => (
+            <li key={post._id} className="card">
+              <h3 className="text-xl font-semibold text-purple-600 mb-2">
+                {post.title}
+              </h3>
+              <p className="text-gray-700 mb-4">{post.content}</p>
+
+              <div className="flex gap-3">
+                <Link to={`/posts/${post._id}`}>
+                  <button className="btn">View</button>
+                </Link>
                 <Link to={`/edit/${post._id}`}>
-                  <button>Edit</button>
+                  <button className="btn">Edit</button>
                 </Link>
               </div>
             </li>

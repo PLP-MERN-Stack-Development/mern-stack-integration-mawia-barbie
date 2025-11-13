@@ -1,2 +1,19 @@
 @import "tailwindcss";
- 
+
+/* src/index.css */
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Custom buttons */
+.btn {
+  @apply bg-purple-500 text-white font-semibold px-4 py-2 rounded-lg
+         hover:bg-purple-600 transition-colors duration-300;
+}
+
+/* Card style */
+.card {
+  @apply bg-white border border-purple-200 rounded-xl shadow-md p-6
+         hover:shadow-lg transition-shadow duration-300 hover:-translate-y-1;
+}
