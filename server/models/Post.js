@@ -20,7 +20,6 @@ const PostSchema = new mongoose.Schema(
     },
     slug: {
       type: String,
-      required: true,
       unique: true,
     },
     excerpt: {
@@ -28,14 +27,12 @@ const PostSchema = new mongoose.Schema(
       maxlength: [200, 'Excerpt cannot be more than 200 characters'],
     },
     author: {
-      type: mongoose.Schema.Types.ObjectId,
-      ref: 'User',
-      required: true,
+      type: String,
+      default: 'Admin', // ✅ temporary default
     },
     category: {
-      type: mongoose.Schema.Types.ObjectId,
-      ref: 'Category',
-      required: true,
+      type: String,
+      default: 'General', // ✅ use simple string until you connect categories
     },
     tags: [String],
     isPublished: {
@@ -49,8 +46,8 @@ const PostSchema = new mongoose.Schema(
     comments: [
       {
         user: {
-          type: mongoose.Schema.Types.ObjectId,
-          ref: 'User',
+          type: String,
+          default: 'Anonymous',
         },
         content: {
           type: String,
@@ -66,17 +63,15 @@ const PostSchema = new mongoose.Schema(
   { timestamps: true }
 );
 
-// Create slug from title before saving
+// Auto-generate slug from title
 PostSchema.pre('save', function (next) {
-  if (!this.isModified('title')) {
-    return next();
-  }
-  
+  if (!this.isModified('title')) return next();
+
   this.slug = this.title
     .toLowerCase()
     .replace(/[^\w ]+/g, '')
     .replace(/ +/g, '-');
-    
+
   next();
 });
 
@@ -97,4 +92,4 @@ PostSchema.methods.incrementViewCount = function () {
   return this.save();
 };
 
-module.exports = mongoose.model('Post', PostSchema); 
+module.exports = mongoose.model('Post', PostSchema);
